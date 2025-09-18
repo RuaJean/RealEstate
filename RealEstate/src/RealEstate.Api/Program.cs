@@ -90,4 +90,7 @@ app.MapControllers();
 
 app.Run();
 
+// Necesario para WebApplicationFactory en tests de integración
+public partial class Program { }
+
 
