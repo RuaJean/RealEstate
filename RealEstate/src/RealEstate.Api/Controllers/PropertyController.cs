@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using RealEstate.Application.DTOs.Property;
 using RealEstate.Application.DTOs.PropertyImage;
 using RealEstate.Application.Services;
@@ -9,6 +10,7 @@ namespace RealEstate.Api.Controllers
 {
     [ApiController]
     [Route("api/properties")]
+    [Authorize]
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyService _service;
@@ -31,6 +33,7 @@ namespace RealEstate.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> Search([FromQuery] Guid? ownerId, [FromQuery] string? text, [FromQuery] decimal? priceMin, [FromQuery] decimal? priceMax, [FromQuery] int? year, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default)
         {
             var filter = new PropertyFilterDto { OwnerId = ownerId, Text = text, PriceMin = priceMin, PriceMax = priceMax, Year = year, Page = page, PageSize = pageSize };

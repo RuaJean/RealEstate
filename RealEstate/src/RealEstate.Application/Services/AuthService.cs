@@ -31,7 +31,7 @@ namespace RealEstate.Application.Services
             }
 
             string hash = _passwordHasher.Hash(request.Password);
-            var user = new User(request.Email, hash, request.Role);
+            var user = new User(request.Email, hash, "user");
             await _userRepository.CreateAsync(user, cancellationToken);
 
             var token = _jwtProvider.Generate(user.Id, user.Email, user.Role);
