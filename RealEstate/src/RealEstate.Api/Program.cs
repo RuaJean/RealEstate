@@ -23,6 +23,52 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+// CORS global configurable por appsettings
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        var corsSection = builder.Configuration.GetSection("Cors");
+        var allowAnyOrigin = corsSection.GetValue<bool?>("AllowAnyOrigin") ?? false;
+        var allowCredentials = corsSection.GetValue<bool?>("AllowCredentials") ?? false;
+        var allowAnyHeader = corsSection.GetValue<bool?>("AllowAnyHeader") ?? true;
+        var allowAnyMethod = corsSection.GetValue<bool?>("AllowAnyMethod") ?? true;
+        var allowedOrigins = corsSection.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+        var allowedHeaders = corsSection.GetSection("AllowedHeaders").Get<string[]>() ?? Array.Empty<string>();
+        var allowedMethods = corsSection.GetSection("AllowedMethods").Get<string[]>() ?? Array.Empty<string>();
+        var exposedHeaders = corsSection.GetSection("ExposedHeaders").Get<string[]>() ?? Array.Empty<string>();
+
+        // Orígenes
+        if (allowAnyOrigin && !allowCredentials)
+        {
+            policy.AllowAnyOrigin();
+        }
+        else if (allowedOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedOrigins)
+                  .SetIsOriginAllowedToAllowWildcardSubdomains();
+            if (allowCredentials) policy.AllowCredentials();
+            else policy.DisallowCredentials();
+        }
+        else
+        {
+            // Sin configuración explícita, usar localhost común para evitar bloqueos accidentales
+            policy.WithOrigins("http://localhost", "http://127.0.0.1");
+        }
+
+        // Headers
+        if (allowAnyHeader) policy.AllowAnyHeader();
+        else if (allowedHeaders.Length > 0) policy.WithHeaders(allowedHeaders);
+
+        // Métodos
+        if (allowAnyMethod) policy.AllowAnyMethod();
+        else if (allowedMethods.Length > 0) policy.WithMethods(allowedMethods);
+
+        // Exponer headers si aplica
+        if (exposedHeaders.Length > 0) policy.WithExposedHeaders(exposedHeaders);
+    });
+});
+
 // AuthN/AuthZ (JWT Bearer)
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? new JwtOptions();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -84,6 +130,7 @@ var summaries = new[]
 };
 
 app.UseStaticFiles();
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
