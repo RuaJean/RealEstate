@@ -9,6 +9,8 @@ using RealEstate.Application.Services;
 using RealEstate.Application.Interfaces.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using RealEstate.Application.Interfaces.Security;
+using RealEstate.Infrastructure.Security;
 
 namespace RealEstate.Api.Configurations
 {
@@ -49,6 +51,14 @@ namespace RealEstate.Api.Configurations
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<IPropertyImageService, PropertyImageService>();
             services.AddScoped<IPropertyTraceService, PropertyTraceService>();
+            services.AddScoped<IAuthService, AuthService>();
+
+            // Seguridad
+            services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
+            var jwtOptions = new JwtOptions();
+            configuration.GetSection("Jwt").Bind(jwtOptions);
+            services.AddSingleton(jwtOptions);
+            services.AddSingleton<IJwtProvider, JwtProvider>();
 
             // FluentValidation
             services.AddFluentValidationAutoValidation();
