@@ -45,8 +45,26 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
                 filter &= builder.Regex(x => x.Name, new BsonRegularExpression(name.Trim(), "i"));
             }
 
+            var projection = Builders<Property>.Projection
+                .Include(x => x.Id)
+                .Include(x => x.Name)
+                .Include(x => x.Address.Street)
+                .Include(x => x.Address.City)
+                .Include(x => x.Address.State)
+                .Include(x => x.Address.Country)
+                .Include(x => x.Address.ZipCode)
+                .Include(x => x.Price.Amount)
+                .Include(x => x.Price.Currency)
+                .Include(x => x.Year)
+                .Include(x => x.Area)
+                .Include(x => x.OwnerId)
+                .Include(x => x.Active)
+                .Include(x => x.CreatedAtUtc);
+
             var list = await _collection
                 .Find(filter)
+                .SortByDescending(x => x.CreatedAtUtc)
+                .Project<Property>(projection)
                 .Skip(skip)
                 .Limit(take)
                 .ToListAsync(cancellationToken);
@@ -64,12 +82,7 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
             }
             if (!string.IsNullOrWhiteSpace(text))
             {
-                var regex = new BsonRegularExpression(text.Trim(), "i");
-                filter &= builder.Or(
-                    builder.Regex(x => x.Name, regex),
-                    builder.Regex(x => x.Address.Street, regex),
-                    builder.Regex(x => x.Address.City, regex)
-                );
+                filter &= builder.Text(text.Trim());
             }
             if (priceMin.HasValue)
             {
@@ -86,8 +99,27 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
 
             var total = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
             var skip = (page - 1) * pageSize;
+
+            var projection = Builders<Property>.Projection
+                .Include(x => x.Id)
+                .Include(x => x.Name)
+                .Include(x => x.Address.Street)
+                .Include(x => x.Address.City)
+                .Include(x => x.Address.State)
+                .Include(x => x.Address.Country)
+                .Include(x => x.Address.ZipCode)
+                .Include(x => x.Price.Amount)
+                .Include(x => x.Price.Currency)
+                .Include(x => x.Year)
+                .Include(x => x.Area)
+                .Include(x => x.OwnerId)
+                .Include(x => x.Active)
+                .Include(x => x.CreatedAtUtc);
+
             var items = await _collection
                 .Find(filter)
+                .SortByDescending(x => x.CreatedAtUtc)
+                .Project<Property>(projection)
                 .Skip(skip)
                 .Limit(pageSize)
                 .ToListAsync(cancellationToken);
