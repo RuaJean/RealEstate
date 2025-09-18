@@ -1,0 +1,35 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+*.vscode/
+*.vs/
+TestResult*/
+*.ncrunch*
+_ReSharper.Caches/
+
+## OS / tools
+.DS_Store
+Thumbs.db
+
+## Rider/JetBrains
+.idea/
+
+## Logs
+logs/
+*.log
+
+## Coverage
+coverage/
+*.coverage*
+*.opencover.xml
+
+## Node (por si se usa tooling)
+node_modules/
+
+## Docker
+**/docker-data/
+

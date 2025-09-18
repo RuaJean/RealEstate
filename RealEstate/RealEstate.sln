@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Api", "src\RealEstate.Api\RealEstate.Api.csproj", "{76BA6574-B7A1-4306-B7BA-7468DF65686A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Application", "src\RealEstate.Application\RealEstate.Application.csproj", "{EA2E06AE-11DD-466D-8949-E8531D86511E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Domain", "src\RealEstate.Domain\RealEstate.Domain.csproj", "{FE21AAC8-3694-48BD-8C8F-1FB123EAA806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Infrastructure", "src\RealEstate.Infrastructure\RealEstate.Infrastructure.csproj", "{6D87DCD4-808A-4FE4-A67E-94B7C436647C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Shared", "src\RealEstate.Shared\RealEstate.Shared.csproj", "{D0F06628-EA31-43F0-838A-50EAA829CAE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{53051332-6A54-4011-8E21-A7ABABCB0CCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokeConsole", "tools\SmokeConsole\SmokeConsole.csproj", "{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76BA6574-B7A1-4306-B7BA-7468DF65686A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BA6574-B7A1-4306-B7BA-7468DF65686A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BA6574-B7A1-4306-B7BA-7468DF65686A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BA6574-B7A1-4306-B7BA-7468DF65686A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA2E06AE-11DD-466D-8949-E8531D86511E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA2E06AE-11DD-466D-8949-E8531D86511E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA2E06AE-11DD-466D-8949-E8531D86511E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA2E06AE-11DD-466D-8949-E8531D86511E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE21AAC8-3694-48BD-8C8F-1FB123EAA806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE21AAC8-3694-48BD-8C8F-1FB123EAA806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE21AAC8-3694-48BD-8C8F-1FB123EAA806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE21AAC8-3694-48BD-8C8F-1FB123EAA806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D87DCD4-808A-4FE4-A67E-94B7C436647C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D87DCD4-808A-4FE4-A67E-94B7C436647C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D87DCD4-808A-4FE4-A67E-94B7C436647C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D87DCD4-808A-4FE4-A67E-94B7C436647C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F06628-EA31-43F0-838A-50EAA829CAE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F06628-EA31-43F0-838A-50EAA829CAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F06628-EA31-43F0-838A-50EAA829CAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F06628-EA31-43F0-838A-50EAA829CAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76BA6574-B7A1-4306-B7BA-7468DF65686A} = {A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}
+		{EA2E06AE-11DD-466D-8949-E8531D86511E} = {A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}
+		{FE21AAC8-3694-48BD-8C8F-1FB123EAA806} = {A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}
+		{6D87DCD4-808A-4FE4-A67E-94B7C436647C} = {A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}
+		{D0F06628-EA31-43F0-838A-50EAA829CAE6} = {A9750A9D-2EB7-4C3F-9C81-8C12F2C4616B}
+		{EE6F3C3C-0DFE-4D7A-879B-737B580A34C0} = {53051332-6A54-4011-8E21-A7ABABCB0CCE}
+	EndGlobalSection
+EndGlobal
