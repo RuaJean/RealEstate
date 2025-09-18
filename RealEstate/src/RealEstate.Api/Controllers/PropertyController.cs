@@ -1,18 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.DTOs.Property;
+using RealEstate.Application.DTOs.PropertyImage;
 using RealEstate.Application.Services;
+using RealEstate.Application.Interfaces;
+using RealEstate.Api.Models;
 
 namespace RealEstate.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/properties")]
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyService _service;
+        private readonly IPropertyImageService _imageService;
+        private readonly IFileStorageService _storage;
 
-        public PropertyController(IPropertyService service)
+        public PropertyController(IPropertyService service, IPropertyImageService imageService, IFileStorageService storage)
         {
             _service = service;
+            _imageService = imageService;
+            _storage = storage;
         }
 
         [HttpGet("{id:guid}")]
@@ -52,11 +59,52 @@ namespace RealEstate.Api.Controllers
             return ok ? NoContent() : NotFound();
         }
 
+        [HttpPut("{id:guid}/price")]
+        public async Task<IActionResult> UpdatePricePut(Guid id, [FromBody] PropertyPriceUpdateDto req, CancellationToken ct)
+        {
+            var ok = await _service.UpdatePriceAsync(id, req, ct);
+            return ok ? NoContent() : NotFound();
+        }
+
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
             var ok = await _service.DeleteAsync(id, ct);
             return ok ? NoContent() : NotFound();
+        }
+
+        [HttpPost("{id:guid}/images")]
+        [Consumes("multipart/form-data")]
+        [RequestSizeLimit(104857600)] // 100MB
+        public async Task<ActionResult<PropertyImageResponseDto>> AddImage(Guid id, [FromForm] PropertyImageUploadRequest form, CancellationToken ct = default)
+        {
+            try
+            {
+                var file = form.File;
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest("Archivo vacío");
+                }
+
+                await using var stream = file.OpenReadStream();
+                var relative = await _storage.SaveFileAsync(stream, file.FileName, file.ContentType, ct);
+                var publicPath = _storage.GetPublicUrl(relative);
+                var url = $"{Request.Scheme}://{Request.Host}{publicPath}";
+
+                var created = await _imageService.CreateAsync(new PropertyImageCreateDto
+                {
+                    PropertyId = id,
+                    Url = url,
+                    Description = form.Description ?? string.Empty,
+                    Enabled = form.Enabled
+                }, ct);
+
+                return Created(url, created);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }
