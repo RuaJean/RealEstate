@@ -9,11 +9,13 @@ namespace RealEstate.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly IHostEnvironment _env;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
         {
             _next = next;
             _logger = logger;
+            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -40,7 +42,8 @@ namespace RealEstate.Api.Middlewares
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled error");
-                await WriteError(context, HttpStatusCode.InternalServerError, "ServerError", "Ha ocurrido un error inesperado");
+                var message = _env.IsDevelopment() ? ex.Message : "Ha ocurrido un error inesperado";
+                await WriteError(context, HttpStatusCode.InternalServerError, "ServerError", message);
             }
         }
 
