@@ -24,6 +24,7 @@ namespace RealEstate.Api.Configurations
             services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
             services.AddScoped<IPropertyTraceRepository, PropertyTraceRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // File storage
             var fsOptions = new LocalFileStorageOptions();

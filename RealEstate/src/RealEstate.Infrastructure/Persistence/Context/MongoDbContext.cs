@@ -15,6 +15,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
         IMongoCollection<Property> Properties { get; }
         IMongoCollection<PropertyImage> PropertyImages { get; }
         IMongoCollection<PropertyTrace> PropertyTraces { get; }
+        IMongoCollection<User> Users { get; }
         IMongoDatabase Database { get; }
     }
 
@@ -27,6 +28,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
         public IMongoCollection<Property> Properties => Database.GetCollection<Property>("properties");
         public IMongoCollection<PropertyImage> PropertyImages => Database.GetCollection<PropertyImage>("property_images");
         public IMongoCollection<PropertyTrace> PropertyTraces => Database.GetCollection<PropertyTrace>("property_traces");
+        public IMongoCollection<User> Users => Database.GetCollection<User>("users");
 
         public MongoDbContext(MongoDbSettings settings)
         {
