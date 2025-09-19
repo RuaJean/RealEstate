@@ -52,7 +52,8 @@ namespace RealEstate.Api.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] PropertyUpdateDto req, CancellationToken ct)
         {
             var ok = await _service.UpdateAsync(id, req, ct);
-            return ok ? NoContent() : Problem("No se pudo actualizar");
+            // Si no se pudo actualizar, lo más probable es que no exista el recurso
+            return ok ? NoContent() : NotFound();
         }
 
         [HttpPatch("{id:guid}/price")]

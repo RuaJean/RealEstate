@@ -8,6 +8,7 @@ using RealEstate.Domain.Entities;
 using RealEstate.Domain.ValueObjects;
 using RealEstate.Infrastructure.Persistence.Context;
 using RealEstate.Application.Interfaces.Repositories;
+using System.Text.RegularExpressions;
 
 namespace RealEstate.Infrastructure.Persistence.Repositories
 {
@@ -82,7 +83,16 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
             }
             if (!string.IsNullOrWhiteSpace(text))
             {
-                filter &= builder.Text(text.Trim());
+                var escaped = Regex.Escape(text.Trim());
+                var prefix = new BsonRegularExpression($"^{escaped}", "i");
+                filter &= builder.Or(
+                    builder.Regex(x => x.Name, prefix),
+                    builder.Regex(x => x.Address.Street, prefix),
+                    builder.Regex(x => x.Address.City, prefix),
+                    builder.Regex(x => x.Address.State, prefix),
+                    builder.Regex(x => x.Address.Country, prefix),
+                    builder.Regex(x => x.Address.ZipCode, prefix)
+                );
             }
             if (priceMin.HasValue)
             {
@@ -130,7 +140,8 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
         public async Task<bool> UpdateAsync(Property property, CancellationToken cancellationToken = default)
         {
             var result = await _collection.ReplaceOneAsync(x => x.Id == property.Id, property, cancellationToken: cancellationToken);
-            return result.IsAcknowledged && result.ModifiedCount > 0;
+            // Consideramos éxito si hubo coincidencia aunque no se modificara ningún campo materializado (ModifiedCount puede ser 0)
+            return result.IsAcknowledged && (result.ModifiedCount > 0 || result.MatchedCount > 0);
         }
 
         public async Task<bool> UpdatePriceAsync(Guid id, Price newPrice, CancellationToken cancellationToken = default)

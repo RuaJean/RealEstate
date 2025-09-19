@@ -24,8 +24,10 @@ namespace RealEstate.Api.Controllers
             }
             using var stream = file.OpenReadStream();
             var relative = await _storage.SaveFileAsync(stream, file.FileName, file.ContentType, ct);
-            var url = _storage.GetPublicUrl(relative);
-            return Ok(new { path = relative, url });
+            var publicPath = _storage.GetPublicUrl(relative);
+            var basePath = Request.PathBase.HasValue ? Request.PathBase.Value.TrimEnd('/') : string.Empty;
+            var absoluteUrl = $"{Request.Scheme}://{Request.Host}{basePath}{publicPath}";
+            return Ok(new { path = relative, url = absoluteUrl });
         }
     }
 }
