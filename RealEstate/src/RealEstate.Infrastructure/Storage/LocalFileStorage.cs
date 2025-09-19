@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 using RealEstate.Application.Interfaces;
 
 namespace RealEstate.Infrastructure.Storage
@@ -26,7 +27,7 @@ namespace RealEstate.Infrastructure.Storage
         public async Task<string> SaveFileAsync(Stream content, string fileName, string contentType, CancellationToken cancellationToken = default)
         {
             string safeExt = Path.GetExtension(fileName);
-            string subfolder = Path.Combine("uploads", DateTime.UtcNow.ToString("yyyy"), DateTime.UtcNow.ToString("MM"), DateTime.UtcNow.ToString("dd"));
+            string subfolder = Path.Combine("uploads", DateTime.UtcNow.ToString("yyyy", CultureInfo.InvariantCulture), DateTime.UtcNow.ToString("MM", CultureInfo.InvariantCulture), DateTime.UtcNow.ToString("dd", CultureInfo.InvariantCulture));
             string relativePath = Path.Combine(subfolder, $"{Guid.NewGuid():N}{safeExt}").Replace('\\', '/');
 
             string root = GetAbsoluteRootPath();

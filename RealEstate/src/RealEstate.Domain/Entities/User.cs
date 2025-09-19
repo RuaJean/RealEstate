@@ -8,9 +8,9 @@ namespace RealEstate.Domain.Entities
     public sealed class User
     {
         public Guid Id { get; private set; }
-        public string Email { get; private set; }
-        public string PasswordHash { get; private set; }
-        public string Role { get; private set; }
+        public string Email { get; private set; } = string.Empty;
+        public string PasswordHash { get; private set; } = string.Empty;
+        public string Role { get; private set; } = string.Empty;
         public DateTime CreatedAtUtc { get; private set; }
 
         private User() { }
@@ -51,7 +51,7 @@ namespace RealEstate.Domain.Entities
         private static string ValidateEmail(string? email)
         {
             string value = ValidateRequired(email, nameof(email), 200);
-            if (!value.Contains("@") || value.StartsWith("@") || value.EndsWith("@"))
+            if (!value.Contains('@') || value.StartsWith('@') || value.EndsWith('@'))
             {
                 throw new ArgumentException("Email no es válido", nameof(email));
             }

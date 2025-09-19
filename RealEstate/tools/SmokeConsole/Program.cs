@@ -126,11 +126,11 @@ Console.WriteLine($"Properties creadas: {propertyIds.Count}");
 string baseUrl = "http://localhost:5106"; // para formar URLs absolutas válidas
 string[] knownUploads = new[]
 {
-    "/uploads/2025/09/18/4361d1dd2fde4755af272fbc03985583.png",
-    "/uploads/2025/09/18/1d228d881a47428a858dc3eba5ac8815.txt",
-    "/uploads/2025/09/18/24dc2787cf5c4b05ad79dfdcbbddb7bd.txt",
-    "/uploads/2025/09/18/f251f3b44f544d8ba18c4e8cfca88738.txt",
-    "/uploads/2025/09/18/ed0f8214438d405f8b43d9ab5256513a.txt"
+    "/uploads/2025/09/19/1be60b9d58094d74b6d0b895f883afc4.png",
+    "/uploads/2025/09/19/36c73c5ba91b4c09a25c165dded10216.png",
+    "/uploads/2025/09/19/e48bbdd914b343e5b587c2a3d3325db1.png",
+    "/uploads/2025/09/19/85583d7b17a74f91b5a4807b73b23e28.webp",
+    "/uploads/2025/09/19/e48bbdd914b343e5b587c2a3d3325db1.png"
 };
 
 var imageIds = new List<Guid>();

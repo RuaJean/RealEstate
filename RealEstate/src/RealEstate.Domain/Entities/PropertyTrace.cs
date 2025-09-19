@@ -11,8 +11,8 @@ namespace RealEstate.Domain.Entities
         public Guid Id { get; private set; }
         public Guid PropertyId { get; private set; }
         public DateTime DateUtc { get; private set; }
-        public string Description { get; private set; }
-        public Price Value { get; private set; }
+        public string Description { get; private set; } = string.Empty;
+        public Price Value { get; private set; } = null!;
 
         private PropertyTrace() { }
 

@@ -8,11 +8,11 @@ namespace RealEstate.Domain.ValueObjects
     /// </summary>
     public sealed record Address
     {
-        public string Street { get; }
-        public string City { get; }
-        public string State { get; }
-        public string Country { get; }
-        public string ZipCode { get; }
+        public string Street { get; } = string.Empty;
+        public string City { get; } = string.Empty;
+        public string State { get; } = string.Empty;
+        public string Country { get; } = string.Empty;
+        public string ZipCode { get; } = string.Empty;
 
         // Ctor privado para serializadores
         private Address() { }

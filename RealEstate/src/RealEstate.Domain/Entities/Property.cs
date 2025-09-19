@@ -9,9 +9,9 @@ namespace RealEstate.Domain.Entities
     public sealed class Property
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public Address Address { get; private set; }
-        public Price Price { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public Address Address { get; private set; } = null!;
+        public Price Price { get; private set; } = null!;
         public int Year { get; private set; }
         public double Area { get; private set; }
         public Guid OwnerId { get; private set; }

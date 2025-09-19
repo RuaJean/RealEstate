@@ -8,9 +8,9 @@ namespace RealEstate.Domain.Entities
     public sealed class Owner
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Address { get; private set; }
-        public string Photo { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Address { get; private set; } = string.Empty;
+        public string Photo { get; private set; } = string.Empty;
         public DateTime CreatedAtUtc { get; private set; }
 
         private Owner() { }

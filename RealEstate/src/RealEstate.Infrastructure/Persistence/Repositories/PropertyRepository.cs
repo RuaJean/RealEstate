@@ -21,10 +21,10 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
             _collection = context.Properties;
         }
 
-        public async Task<Property> CreateAsync(Property property, CancellationToken cancellationToken = default)
+        public async Task<Property> CreateAsync(Property entity, CancellationToken cancellationToken = default)
         {
-            await _collection.InsertOneAsync(property, cancellationToken: cancellationToken);
-            return property;
+            await _collection.InsertOneAsync(entity, cancellationToken: cancellationToken);
+            return entity;
         }
 
         public async Task<Property?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -152,9 +152,9 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
             return (items, total);
         }
 
-        public async Task<bool> UpdateAsync(Property property, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(Property entity, CancellationToken cancellationToken = default)
         {
-            var result = await _collection.ReplaceOneAsync(x => x.Id == property.Id, property, cancellationToken: cancellationToken);
+            var result = await _collection.ReplaceOneAsync(x => x.Id == entity.Id, entity, cancellationToken: cancellationToken);
             // Consideramos éxito si hubo coincidencia aunque no se modificara ningún campo materializado (ModifiedCount puede ser 0)
             return result.IsAcknowledged && (result.ModifiedCount > 0 || result.MatchedCount > 0);
         }

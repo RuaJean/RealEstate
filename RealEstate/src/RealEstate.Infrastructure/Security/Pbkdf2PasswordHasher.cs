@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography;
+using System.Globalization;
 using RealEstate.Application.Interfaces.Security;
 
 namespace RealEstate.Infrastructure.Security
@@ -27,7 +28,7 @@ namespace RealEstate.Infrastructure.Security
             var parts = passwordHash.Split('.');
             if (parts.Length != 3) return false;
 
-            int iterations = int.Parse(parts[0]);
+            int iterations = int.Parse(parts[0], CultureInfo.InvariantCulture);
             byte[] salt = Convert.FromBase64String(parts[1]);
             byte[] key = Convert.FromBase64String(parts[2]);
 

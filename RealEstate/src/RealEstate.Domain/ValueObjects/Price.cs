@@ -10,7 +10,7 @@ namespace RealEstate.Domain.ValueObjects
     public sealed record Price
     {
         public decimal Amount { get; }
-        public string Currency { get; }
+        public string Currency { get; } = string.Empty;
 
         // Ctor privado para serializadores
         private Price() { }

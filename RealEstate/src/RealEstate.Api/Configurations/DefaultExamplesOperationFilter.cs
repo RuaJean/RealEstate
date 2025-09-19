@@ -12,10 +12,10 @@ namespace RealEstate.Api.Configurations
 
             foreach (var (contentType, media) in operation.RequestBody.Content)
             {
-                if (contentType.Contains("application/json") && media.Schema?.Reference?.Id is string schemaId)
+                if (contentType.Contains("application/json", StringComparison.Ordinal) && media.Schema?.Reference?.Id is string schemaId)
                 {
                     // Agrega ejemplos simples para algunos DTOs conocidos
-                    if (schemaId.EndsWith("PropertyCreateDto"))
+                    if (schemaId.EndsWith("PropertyCreateDto", StringComparison.Ordinal))
                     {
                         media.Example = new OpenApiObject
                         {
@@ -33,7 +33,7 @@ namespace RealEstate.Api.Configurations
                             ["active"] = new OpenApiBoolean(true)
                         };
                     }
-                    else if (schemaId.EndsWith("PropertyPriceUpdateDto"))
+                    else if (schemaId.EndsWith("PropertyPriceUpdateDto", StringComparison.Ordinal))
                     {
                         media.Example = new OpenApiObject
                         {
@@ -41,7 +41,7 @@ namespace RealEstate.Api.Configurations
                             ["currency"] = new OpenApiString("USD")
                         };
                     }
-                    else if (schemaId.EndsWith("OwnerCreateDto"))
+                    else if (schemaId.EndsWith("OwnerCreateDto", StringComparison.Ordinal))
                     {
                         media.Example = new OpenApiObject
                         {
@@ -51,7 +51,7 @@ namespace RealEstate.Api.Configurations
                         };
                     }
                 }
-                else if (contentType.Contains("multipart/form-data"))
+                else if (contentType.Contains("multipart/form-data", StringComparison.Ordinal))
                 {
                     // ejemplo de form-data
                     media.Example = new OpenApiObject

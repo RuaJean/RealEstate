@@ -1,0 +1,4 @@
+# Ignorar dumps binarios locales
+dump/
+
+

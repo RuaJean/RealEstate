@@ -9,8 +9,8 @@ namespace RealEstate.Domain.Entities
     {
         public Guid Id { get; private set; }
         public Guid PropertyId { get; private set; }
-        public string Url { get; private set; }
-        public string Description { get; private set; }
+        public string Url { get; private set; } = string.Empty;
+        public string Description { get; private set; } = string.Empty;
         public bool Enabled { get; private set; }
         public DateTime CreatedAtUtc { get; private set; }
 

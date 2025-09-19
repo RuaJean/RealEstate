@@ -22,7 +22,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
 
     public sealed class MongoDbContext : IMongoDbContext
     {
-        private readonly IMongoClient _client;
+        private readonly MongoClient _client;
         public IMongoDatabase Database { get; }
 
         public IMongoCollection<Owner> Owners => Database.GetCollection<Owner>("owners");
