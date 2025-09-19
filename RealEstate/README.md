@@ -12,35 +12,19 @@ API REST para gestión de inmuebles, propietarios, trazas y autenticación JWT.
 ```
 dotnet restore
 dotnet build -c Release
+dotnet run
 ```
 
 2) Base de datos MongoDB
-- Opción A: Docker Compose (usuario root/example)
-```
-docker compose up -d mongo
-```
-- Opción B: Mongo local sin credenciales (ajusta la cadena de conexión según tu instalación)
+- Opción A: Importar el dumb de la base de datos en tools/migrations/import.sh
 
-3) Variables de entorno (recomendado)
-Configura variables para apuntar a tu Mongo y JWT. En macOS/Linux (zsh/bash):
-```
-export ASPNETCORE_ENVIRONMENT=Development
-export MongoDb__ConnectionString="mongodb://root:example@localhost:27017"
-export MongoDb__Database="RealEstateDb"
-export Jwt__Issuer="RealEstateApi"
-export Jwt__Audience="RealEstateApiClients"
-export Jwt__SecretKey="cambia-esta-clave-en-produccion"
-export Jwt__ExpirationMinutes=60
-export FileStorage__RootPath="wwwroot"
-export FileStorage__BaseRequestPath="/"
-```
-Notas:
-- Si usas el `docker-compose.yml` incluido (con root/example), necesitas credenciales en la cadena de conexión.
-- Puedes dejar los valores por defecto del `appsettings.json`, pero no se recomienda para producción (no subas SecretKey reales al repo).
+- Opción B: ejecutar el seeder en tools/SmokeConsole/Program.cs
+
 
 4) Levantar la API
 ```
 dotnet run --project src/RealEstate.Api/RealEstate.Api.csproj
+(o simplemente dotnet run)
 ```
 La API quedará en `http://localhost:5106` (según `launchSettings.json`). Swagger: `http://localhost:5106/swagger`.
 
@@ -161,15 +145,6 @@ Claves relevantes que puedes sobreescribir vía variables de entorno (`__` anida
 - `FileStorage:RootPath` → `FileStorage__RootPath`
 - `FileStorage:BaseRequestPath` → `FileStorage__BaseRequestPath`
 
-## Despliegue / CI (resumen)
-- Build y tests:
-```
-dotnet restore
-dotnet build -c Release
-dotnet test -c Release
-```
-- En CI (GitHub Actions), expón un servicio Mongo o usa `MONGO_URL` y ejecuta ambas suites (unit e integración).
 
 ## Notas
 - Algunos warnings de paquetes (AutoMapper.Extensions vs AutoMapper 13.x). No afectan la ejecución; se pueden alinear versiones más adelante.
-- No uses la `SecretKey` por defecto en entornos productivos.
