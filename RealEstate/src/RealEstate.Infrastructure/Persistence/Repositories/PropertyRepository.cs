@@ -94,13 +94,28 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
                     builder.Regex(x => x.Address.ZipCode, prefix)
                 );
             }
-            if (priceMin.HasValue)
+            if (priceMin.HasValue || priceMax.HasValue)
             {
-                filter &= builder.Gte(x => x.Price.Amount, priceMin.Value);
-            }
-            if (priceMax.HasValue)
-            {
-                filter &= builder.Lte(x => x.Price.Amount, priceMax.Value);
+                // Usar $expr y $toDecimal para soportar datos almacenados como string o decimal
+                if (priceMin.HasValue && priceMax.HasValue)
+                {
+                    var expr = new BsonDocument("$expr", new BsonDocument("$and", new BsonArray
+                    {
+                        new BsonDocument("$gte", new BsonArray { new BsonDocument("$toDecimal", "$Price.Amount"), priceMin.Value }),
+                        new BsonDocument("$lte", new BsonArray { new BsonDocument("$toDecimal", "$Price.Amount"), priceMax.Value })
+                    }));
+                    filter &= expr;
+                }
+                else if (priceMin.HasValue)
+                {
+                    var expr = new BsonDocument("$expr", new BsonDocument("$gte", new BsonArray { new BsonDocument("$toDecimal", "$Price.Amount"), priceMin.Value }));
+                    filter &= expr;
+                }
+                else if (priceMax.HasValue)
+                {
+                    var expr = new BsonDocument("$expr", new BsonDocument("$lte", new BsonArray { new BsonDocument("$toDecimal", "$Price.Amount"), priceMax.Value }));
+                    filter &= expr;
+                }
             }
             if (year.HasValue)
             {
